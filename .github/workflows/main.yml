@@ -5,55 +5,55 @@ on:
     branches: [ "main" ]
     
 jobs:
-  format:
-    name: Format check 🗒️- old
-    runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: "projekt/Assets"
-    steps:
-      - uses: actions/checkout@v4
-      - name: Installing .NET...
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
-      - name: Installing dependencies...
-        run: dotnet tool install -g csharpier
-      - name: Restoring dependencies...
-        run: dotnet tool restore
-      - name: Running format...
-        run: dotnet csharpier --check
-  tests:
-    name: Test runner 🧪 - old
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          lfs: true
-      - uses: actions/cache@v3
-        with:
-          path: projekt/Library
-          key: Library-projekt
-          restore-keys: |
-            Library-
-      - uses: game-ci/unity-test-runner@v4
-        id: tests
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          projectPath: projekt
-          testMode: editmode
-          artifactsPath: editmode-artifacts
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          checkName: editMode Test Results
-          coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: Test results for editMode
-          path: ${{ steps.tests.outputs.artifactsPath }}
+  # format:
+  #   name: Format check 🗒️- old
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run: 
+  #       working-directory: "projekt/Assets"
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Installing .NET...
+  #       uses: actions/setup-dotnet@v4
+  #       with:
+  #         dotnet-version: 8.0.x
+  #     - name: Installing dependencies...
+  #       run: dotnet tool install -g csharpier
+  #     - name: Restoring dependencies...
+  #       run: dotnet tool restore
+  #     - name: Running format...
+  #       run: dotnet csharpier --check
+  # tests:
+  #   name: Test runner 🧪 - old
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         lfs: true
+  #     - uses: actions/cache@v3
+  #       with:
+  #         path: projekt/Library
+  #         key: Library-projekt
+  #         restore-keys: |
+  #           Library-
+  #     - uses: game-ci/unity-test-runner@v4
+  #       id: tests
+  #       env:
+  #         UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+  #         UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+  #         UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+  #       with:
+  #         projectPath: projekt
+  #         testMode: editmode
+  #         artifactsPath: editmode-artifacts
+  #         githubToken: ${{ secrets.GITHUB_TOKEN }}
+  #         checkName: editMode Test Results
+  #         coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
+  #     - uses: actions/upload-artifact@v3
+  #       if: always()
+  #       with:
+  #         name: Test results for editMode
+  #         path: ${{ steps.tests.outputs.artifactsPath }}
   build:
     name: Build project 🏗️
     runs-on: ubuntu-latest
@@ -100,62 +100,62 @@ jobs:
         with:
           name: Build
           path: build
-  auto-tag:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  # auto-tag:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-      - name: Set up Git
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
+  #     - name: Set up Git
+  #       run: |
+  #         git config --global user.name 'github-actions'
+  #         git config --global user.email 'github-actions@github.com'
 
-      - name: Fetch Tags
-        run: git fetch --tags
+  #     - name: Fetch Tags
+  #       run: git fetch --tags
 
-      - name: Calculate new tag
-        id: new_tag
-        run: |
-          # Pobierz tagi i posortuj je wersyjnie
-          TAG=$(git tag --sort=-v:refname | head -n 1)
+  #     - name: Calculate new tag
+  #       id: new_tag
+  #       run: |
+  #         # Pobierz tagi i posortuj je wersyjnie
+  #         TAG=$(git tag --sort=-v:refname | head -n 1)
           
-          # Ustal nowy numer wersji
-          if [ -z "$TAG" ]; then
-            NEW_TAG="0.0"
-          else
-            NEW_TAG=$(echo $TAG | awk -F. '{$NF = $NF + 1; OFS="."; print $0}')
-          fi
+  #         # Ustal nowy numer wersji
+  #         if [ -z "$TAG" ]; then
+  #           NEW_TAG="0.0"
+  #         else
+  #           NEW_TAG=$(echo $TAG | awk -F. '{$NF = $NF + 1; OFS="."; print $0}')
+  #         fi
           
-          # Ustaw zmienną wyjściową dla kolejnych kroków
-          echo "::set-output name=tag::$NEW_TAG"
+  #         # Ustaw zmienną wyjściową dla kolejnych kroków
+  #         echo "::set-output name=tag::$NEW_TAG"
 
-      - name: Create and Push Tag
-        if: steps.new_tag.outputs.tag
-        run: |
-          NEW_TAG=${{ steps.new_tag.outputs.tag }}
-          git tag $NEW_TAG
-          git push origin $NEW_TAG
-  release:
-    needs: auto-tag
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: Build
+  #     - name: Create and Push Tag
+  #       if: steps.new_tag.outputs.tag
+  #       run: |
+  #         NEW_TAG=${{ steps.new_tag.outputs.tag }}
+  #         git tag $NEW_TAG
+  #         git push origin $NEW_TAG
+  # release:
+  #   needs: auto-tag
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Download Build Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: Build
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
-          draft: false
-          prerelease: false
+  #     - name: Create Release
+  #       id: create_release
+  #       uses: actions/create-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         tag_name: ${{ github.ref_name }}
+  #         release_name: Release ${{ github.ref_name }}
+  #         draft: false
+  #         prerelease: false
   call-format:
     name: Format check 🗒️
     uses: ./.github/workflows/format.yml
