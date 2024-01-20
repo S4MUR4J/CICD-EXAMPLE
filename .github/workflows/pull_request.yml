@@ -1,0 +1,14 @@
+name: Unity CI/CD - Main/Release PR (Format check, Test Runner)
+
+on:
+  pull_request:
+    branches: [ "main", "release" ]
+    
+jobs:
+  Unity_CICD_PR:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Calling format check..."
+        uses: ./.github/workflows/format.yaml
+      - name: "Calling test runner..."
+        uses: ./.github/workflows/test.yaml
