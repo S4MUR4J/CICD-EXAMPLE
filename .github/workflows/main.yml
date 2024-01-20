@@ -164,9 +164,9 @@ jobs:
     name: Test runner 🧪
     uses: ./.github/workflows/test.yml
     with:
-      license: ${{ env.secrets.UNITY_LICENSE }}
-      email: ${{ env.secrets.UNITY_EMAIL }}
-      password: ${{ env.secrets.UNITY_PASSWORD }}
+      license: ${{ secrets.UNITY_LICENSE }}
+      email: ${{ secrets.UNITY_EMAIL }}
+      password: ${{ secrets.UNITY_PASSWORD }}
   call-build:
     needs: call-format
     name: Build project 🏗️
