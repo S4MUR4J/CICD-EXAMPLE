@@ -28,9 +28,9 @@ jobs:
   tests:
     name: Test runner 🧪
     runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: "projekt"
+    # defaults:
+    #   run: 
+    #     working-directory: "projekt"
     steps:
       - name: Checkouting repository...
         uses: actions/checkout@v4
@@ -50,13 +50,14 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
+          projectPath: projekt
           githubToken: ${{ secrets.TOKEN }}
   build:
     name: Build project 🏗️
     runs-on: ubuntu-latest
-    defaults:
-          run: 
-            working-directory: "projekt"
+    # defaults:
+    #       run: 
+    #         working-directory: "projekt"
     steps:
       - name: Checkouting repository...
         uses: actions/checkout@v4
@@ -76,6 +77,7 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
+          projectPath: projekt
           targetPlatform: Windows
       - name: Uploading build...
         uses: actions/upload-artifact@v3
