@@ -171,7 +171,7 @@ jobs:
     needs: call-format
     name: Build project 🏗️
     uses: ./.github/workflows/build.yml
-    secrets:
+    with:
       UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
       UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
