@@ -163,10 +163,7 @@ jobs:
     needs: call-format
     name: Test runner 🧪
     uses: ./.github/workflows/test.yml
-    secrets:
-      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    secrets: inherit
   call-build:
     needs: call-format
     name: Build project 🏗️
