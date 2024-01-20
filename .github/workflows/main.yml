@@ -5,6 +5,24 @@ on:
     branches: [ "main" ]
     
 jobs:
+  format:
+    name: Format check 🗒️
+    runs-on: ubuntu-latest
+    defaults:
+      run: 
+        working-directory: "projekt/Assets"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Installing .NET...
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      - name: Installing dependencies...
+        run: dotnet tool install -g csharpier
+      - name: Restoring dependencies...
+        run: dotnet tool restore
+      - name: Running format...
+        run: dotnet csharpier --check
   Unity_CICD_MAIN:
     runs-on: ubuntu-latest
     steps:
