@@ -23,4 +23,4 @@ jobs:
       - name: restore
         run: dotnet tool restore
       - name: run csharpier
-        run: dotnet csharpier ./Assets/
+        run: dotnet csharpier --check ./Assets/
