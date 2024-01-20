@@ -2,13 +2,6 @@ name: tests
 
 on:
   workflow_call:
-    secrets:
-      UNITY_LICENSE:
-        required: true
-      UNITY_EMAIL:
-        required: true
-      UNITY_PASSWORD:
-        required: true
 
 jobs:
   tests:
