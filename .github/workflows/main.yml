@@ -158,9 +158,9 @@ jobs:
           prerelease: false
   call-format:
     name: Format check 🗒️ 2
-    uses: ./.github/workflows/basic/format.yml
+    uses: ./.github/workflows/format.yml
   call-test:
     needs: call-format
     name: Test runner 🧪 2
-    uses: ./.github/workflows/basic/test.yml
+    uses: ./.github/workflows/test.yml
       
