@@ -5,29 +5,25 @@ on:
 
 jobs:
   tests:
-    name: Test runner 🧪
+    name: call
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checking out...
         uses: actions/checkout@v2
-
-      - name: Create LFS file list
+      - name: Creating LFS files list...
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-      - name: Restore LFS cache
+      - name: Restoring LFS cache...
         uses: actions/cache@v2
         id: lfs-cache
         with:
           path: .git/lfs
           key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-
-      - name: Git LFS Pull
+      - name: Git LFS pulling...
         run: |
           git lfs pull
           git add .
           git reset --hard
-
-      - name: Restore Library cache
+      - name: Restoring Library cache...
         uses: actions/cache@v2
         with:
           path: projekt/Library
