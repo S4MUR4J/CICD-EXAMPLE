@@ -33,3 +33,8 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: editMode Test Results
           coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: Test result
+          path: ${{ jobs.tests.outputs.coveragePath }}
