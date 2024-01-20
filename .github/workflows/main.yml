@@ -47,7 +47,11 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           projectPath: "./GIT TEST/"
-          githubToken: ${{ secrets.TOKEN }} 
+          githubToken: ${{ secrets.TOKEN }}
+  build:
+    name: Build project 🏗️
+    runs-on: ubuntu-latest
+    steps: 
       - name: Building project...
         uses: game-ci/unity-builder@v4
         env:
@@ -56,8 +60,9 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: Windows
-      - uses: actions/upload-artifact@v3
+      - name: Uploading build...
+        uses: actions/upload-artifact@v3
         with:
           name: Build
           path: build
-            githubToken: ${{ secrets.TOKEN }}       
+          githubToken: ${{ secrets.TOKEN }}       
