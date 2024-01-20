@@ -16,7 +16,7 @@ jobs:
       - name: restore
         run: dotnet tool restore
       - name: run csharpier
-        run: dotnet csharpier --check ./Assets
+        run: dotnet csharpier --check Assets
   build:
     name: Build my project ✨
     runs-on: ubuntu-latest
