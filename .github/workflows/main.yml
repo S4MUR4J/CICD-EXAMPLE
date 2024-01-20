@@ -28,74 +28,76 @@ jobs:
   #     - name: Running format...
   #       run: dotnet csharpier --check
   tests:
-    name: Test runner 🧪
-    runs-on: ubuntu-latest
-    # defaults:
-    #   run: 
-    #     working-directory: "projekt"
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    uses: ./.github/workflows/test.yaml
+    # name: Test runner 🧪
+    # runs-on: ubuntu-latest
+    # # defaults:
+    # #   run: 
+    # #     working-directory: "projekt"
+    # steps:
+    #   - name: Checkout code
+    #     uses: actions/checkout@v2
 
-      - name: Create LFS file list
-        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+    #   - name: Create LFS file list
+    #     run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
-      - name: Restore LFS cache
-        uses: actions/cache@v2
-        id: lfs-cache
-        with:
-          path: .git/lfs
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+    #   - name: Restore LFS cache
+    #     uses: actions/cache@v2
+    #     id: lfs-cache
+    #     with:
+    #       path: .git/lfs
+    #       key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
 
-      - name: Git LFS Pull
-        run: |
-          git lfs pull
-          git add .
-          git reset --hard
+    #   - name: Git LFS Pull
+    #     run: |
+    #       git lfs pull
+    #       git add .
+    #       git reset --hard
 
-      - name: Restore Library cache
-        uses: actions/cache@v2
-        with:
-          path: projekt/Library
-          key: Library-test-project
-          restore-keys: |
-            Library-test-
-      - name: Running tests...
-        uses: game-ci/unity-test-runner@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          projectPath: projekt
-          githubToken: ${{ secrets.TOKEN }}
+    #   - name: Restore Library cache
+    #     uses: actions/cache@v2
+    #     with:
+    #       path: projekt/Library
+    #       key: Library-test-project
+    #       restore-keys: |
+    #         Library-test-
+    #   - name: Running tests...
+    #     uses: game-ci/unity-test-runner@v4
+    #     env:
+    #       UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+    #       UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+    #       UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    #     with:
+    #       projectPath: projekt
+    #       githubToken: ${{ secrets.TOKEN }}
   build:
-    name: Build project 🏗️
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        targetPlatform:
-          - StandaloneWindows # Build a Windows standalone.
-          - StandaloneWindows64 # Build a Windows 64-bit standalone.
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          lfs: true
-      - uses: actions/cache@v3
-        with:
-          path: projekt/Library
-          key: Library-${{ matrix.targetPlatform }}
-          restore-keys: Library-=
-      - uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          targetPlatform: ${{ matrix.targetPlatform }}
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Build-${{ matrix.targetPlatform }}
-          path: build/${{ matrix.targetPlatform }}
+    uses: ./.github/workflows/build.yaml
+    # name: Build project 🏗️
+    # runs-on: ubuntu-latest
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     targetPlatform:
+    #       - StandaloneWindows # Build a Windows standalone.
+    #       - StandaloneWindows64 # Build a Windows 64-bit standalone.
+    # steps:
+    #   - uses: actions/checkout@v4
+    #     with:
+    #       fetch-depth: 0
+    #       lfs: true
+    #   - uses: actions/cache@v3
+    #     with:
+    #       path: projekt/Library
+    #       key: Library-${{ matrix.targetPlatform }}
+    #       restore-keys: Library-=
+    #   - uses: game-ci/unity-builder@v4
+    #     env:
+    #       UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+    #       UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+    #       UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    #     with:
+    #       targetPlatform: ${{ matrix.targetPlatform }}
+    #   - uses: actions/upload-artifact@v3
+    #     with:
+    #       name: Build-${{ matrix.targetPlatform }}
+    #       path: build/${{ matrix.targetPlatform }}
