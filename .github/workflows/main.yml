@@ -6,7 +6,7 @@ on:
     
 jobs:
   format:
-    name: Format check 🗒️
+    name: Format check 🗒️- old
     runs-on: ubuntu-latest
     defaults:
       run: 
@@ -24,7 +24,7 @@ jobs:
       - name: Running format...
         run: dotnet csharpier --check
   tests:
-    name: Test runner 🧪
+    name: Test runner 🧪 - old
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -157,8 +157,10 @@ jobs:
           draft: false
           prerelease: false
   call-format:
+    name: Format check 🗒️
     uses: ./.github/workflows/format.yml
   call-test:
     needs: call-format
+    name: Test runner 🧪
     uses: ./.github/workflows/test.yml
       
