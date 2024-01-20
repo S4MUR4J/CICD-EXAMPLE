@@ -6,6 +6,8 @@ on:
 jobs:
   format:
     runs-on: ubuntu-latest
+    env:
+      unity_name: ${{ UNITY_NAME }}
     steps:
       - uses: actions/checkout@v3
       - name: Installing .NET...
@@ -17,4 +19,4 @@ jobs:
       - name: Restoring dependencies...
         run: dotnet tool restore
       - name: Running format...
-        run: dotnet csharpier --check "$'{{ UNITY_NAME }}'/Assets"
+        run: dotnet csharpier --check "$UNITY_NAME/Assets"
