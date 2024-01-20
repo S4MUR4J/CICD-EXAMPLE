@@ -4,8 +4,7 @@ on:
   workflow_call:
 
 jobs:
-  format:
-    name: Format check 🗒️
+  call:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
