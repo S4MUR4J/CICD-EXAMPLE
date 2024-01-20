@@ -1,45 +1,42 @@
-name: Actions 😎
+name: Unity CI/CD - [Format check, Test Runner]
 
-on: [push, pull_request]
-
+on:
+  push:
+  pull_request:
 jobs:
-  CHECK-FORMAT:
+  format:
+    name: Format check 🗒️
     defaults:
-      run:
-        working-directory: "./GIT TEST/"
+      run: 
+        working-directory: "./GIT-TEST/Assets/"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Setup .NET
+      - name: Installing .NET...
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
-      - name: install dependencies
+      - name: Installing dependencies...
         run: dotnet tool install -g csharpier
-      - name: restore
+      - name: Restoring dependencies...
         run: dotnet tool restore
-      - name: run csharpier
+      - name: Running format...
         run: dotnet csharpier --check ./Assets/
-  build:
-    name: Build my project ✨
+  tests:
+    name: Test runner 🧪
     runs-on: ubuntu-latest
     steps:
-      # Checkout
-      - name: Checkout repository
+      - name: Checkouting repository...
         uses: actions/checkout@v4
         with:
           lfs: true
-
-      # Cache
       - uses: actions/cache@v3
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
             Library-
-
-      # Test
-      - name: Run tests
+      - name: Running tests...
         uses: game-ci/unity-test-runner@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -47,10 +44,8 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           projectPath: "./GIT TEST/"
-          githubToken: ${{ secrets.TOKEN }}
-
-      # Build
-      - name: Build project
+          githubToken: ${{ secrets.TOKEN }} 
+      - name: Building project...
         uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -58,9 +53,8 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: Windows
-
-      # Output
       - uses: actions/upload-artifact@v3
         with:
           name: Build
           path: build
+            githubToken: ${{ secrets.TOKEN }}       
