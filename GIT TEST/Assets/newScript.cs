@@ -7,7 +7,7 @@ public class newScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-                                var name = "string";
+        var name = "string";
     }
 
     // Update is called once per frame
