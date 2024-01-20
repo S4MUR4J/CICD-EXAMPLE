@@ -101,6 +101,7 @@ jobs:
           name: Build
           path: build
   auto-tag:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -112,7 +113,7 @@ jobs:
           git config --global user.email 'github-actions@github.com'
 
       - name: Fetch Tags
-        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+        run: git fetch --tags
 
       - name: Calculate new tag
         id: new_tag
@@ -137,7 +138,7 @@ jobs:
           git tag $NEW_TAG
           git push origin $NEW_TAG
   release:
-    needs: build
+    needs: auto-tag
     runs-on: ubuntu-latest
     steps:
       - name: Download Build Artifact
