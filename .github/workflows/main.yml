@@ -9,6 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Calling format check..."
-        uses: ./.GIT-TEST/.github/workflows/basic/format.yml
+        uses: ./.github/workflows/basic/format.yml
       - name: "Calling test runner..."
-        uses: ./.GIT-TEST/.github/workflows/basic/test.yml
+        uses: ./.github/workflows/basic/test.yml
