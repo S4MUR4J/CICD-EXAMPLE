@@ -34,11 +34,13 @@ jobs:
           checkName: Test results
           coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
       - uses: actions/upload-artifact@v3
+        name: Uploading artifacts...
         if: always()
         with:
           name: Test results - artifacts
           path: ${{ steps.tests.outputs.artifactsPath }}
       - uses: actions/upload-artifact@v3
+        name: Uploading coverage...
         if: always()
         with:
           name: Coverage results - coverage
