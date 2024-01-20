@@ -70,7 +70,7 @@ jobs:
           lfs: true
       - uses: actions/cache@v3
         with:
-          path: projekt/Library
+          path: projekt
           key: Library-${{ matrix.targetPlatform }}
           restore-keys: Library-
       - uses: game-ci/unity-builder@v4
