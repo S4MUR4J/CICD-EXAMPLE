@@ -159,13 +159,13 @@ jobs:
   call-format:
     name: Format check 🗒️
     uses: ./.github/workflows/format.yml
-  call-test:
+  call-tests:
     needs: call-format
     name: Test runner 🧪
     uses: ./.github/workflows/test.yml
     secrets: inherit
   call-build:
-    needs: call-format
+    needs: call-tests
     name: Build project 🏗️
     uses: ./.github/workflows/build.yml
     secrets: inherit
