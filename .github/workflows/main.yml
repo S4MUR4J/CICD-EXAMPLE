@@ -8,6 +8,8 @@ jobs:
   Unity_CICD_MAIN:
     runs-on: ubuntu-latest
     steps:
+      - name: "Checking out..."
+        uses: actions/checkout@v4
       - name: "Calling format check..."
         uses: ././.github/workflows/basic/format.yml
       - name: "Calling test runner..."
