@@ -3,6 +3,20 @@ name: Actions 😎
 on: [push, pull_request]
 
 jobs:
+  CHECK-FORMAT:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      - name: install dependencies
+        run: dotnet tool install -g csharpier
+      - name: restore
+        run: dotnet tool restore
+      - name: run csharpier
+        run: dotnet csharpier --check Assets/
   build:
     name: Build my project ✨
     runs-on: ubuntu-latest
