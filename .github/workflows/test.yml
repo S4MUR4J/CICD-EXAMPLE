@@ -31,10 +31,15 @@ jobs:
           testMode: editmode
           artifactsPath: editmode-artifacts
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          checkName: editMode Test Results
+          checkName: Test results
           coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
       - uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: Test result
-          path: ${{ tests.outputs.coveragePath }}
+          name: Test results - artifacts
+          path: ${{ steps.tests.outputs.artifactsPath }}
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: Coverage results - coverage
+          path: ${{ steps.tests.outputs.coveragePath }}
