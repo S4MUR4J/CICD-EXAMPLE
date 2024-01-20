@@ -163,4 +163,8 @@ jobs:
     needs: call-format
     name: Test runner 🧪
     uses: ./.github/workflows/test.yml
+  call-build:
+    needs: call-format
+    name: Build project 🏗️
+    uses: ./.github/workflows/build.yml
       
