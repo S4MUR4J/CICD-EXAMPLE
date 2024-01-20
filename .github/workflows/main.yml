@@ -4,6 +4,9 @@ on: [push, pull_request]
 
 jobs:
   CHECK-FORMAT:
+    defaults:
+      run:
+        working-directory: "./GIT TEST/"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,7 +19,7 @@ jobs:
       - name: restore
         run: dotnet tool restore
       - name: run csharpier
-        run: dotnet csharpier --check Assets
+        run: dotnet csharpier --check ./Assets/
   build:
     name: Build my project ✨
     runs-on: ubuntu-latest
