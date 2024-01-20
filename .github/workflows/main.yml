@@ -10,7 +10,7 @@ jobs:
   build:
     defaults:
       run:
-        working-directory: "./GIT TEST"
+        working-directory: "./GIT TEST/"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,4 +21,4 @@ jobs:
       - name: install dependencies
         run: dotnet restore
       - name: run csharpier
-        run: dotnet csharpier 'GIT TEST'\Assets
+        run: dotnet csharpier ./Assets/
