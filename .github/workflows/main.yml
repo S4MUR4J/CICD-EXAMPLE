@@ -1,20 +1,3 @@
-# name: Unity CI/CD - Main/Release PR (Format check, Test Runner)
-
-# on:
-#   pull_request:
-#     branches: [ "main", "release" ]
-    
-# jobs:
-#   Unity_CICD_PR:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: "Calling format check..."
-#         uses: ./.github/workflows/format.yaml
-#       - name: "Calling test runner..."
-#         uses: ./.github/workflows/test.yaml
-
-# ---
-
 name: Unity CI/CD - Main push (Format check, Test Runner)
 
 on:
@@ -29,22 +12,3 @@ jobs:
         uses: ./.github/workflows/format.yaml
       - name: "Calling test runner..."
         uses: ./.github/workflows/test.yaml
-
-# ---
-        
-# name: Unity CI/CD - Release push (Format check, Test Runner, Build Runner)
-
-# on:
-#   push:
-#     branches: [ "release" ]
-    
-# jobs:
-#   Unity_CICD_PR:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: "Calling format check..."
-#         uses: ./.github/workflows/format.yaml
-#       - name: "Calling test runner..."
-#         uses: ./.github/workflows/test.yaml
-#       - name: "Calling build runner..."
-#         uses: ./.github/workflows/build.yaml
