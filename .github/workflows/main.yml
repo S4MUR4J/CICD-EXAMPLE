@@ -57,14 +57,6 @@ jobs:
   build:
     name: Build project 🏗️
     runs-on: ubuntu-latest
-    name: Build project
-
-on: [push, pull_request]
-
-jobs:
-  buildForAllSupportedPlatforms:
-    name: Build for ${{ matrix.targetPlatform }}
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
