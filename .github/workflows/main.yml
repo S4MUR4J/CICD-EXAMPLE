@@ -54,7 +54,7 @@ jobs:
       - name: Restore Library cache
         uses: actions/cache@v2
         with:
-          path: test-projects/test-project/Library
+          path: projekt/Library
           key: Library-test-project
           restore-keys: |
             Library-test-
