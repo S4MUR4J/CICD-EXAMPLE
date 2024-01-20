@@ -13,8 +13,8 @@ jobs:
         with:
           dotnet-version: 8.0.x
       - name: Installing dependencies...
-        run: dotnet tool install -g csharpier "projekt/Assets"
+        run: dotnet tool install -g csharpier
       - name: Restoring dependencies...
         run: dotnet tool restore
       - name: Running format...
-        run: dotnet csharpier --check
+        run: dotnet csharpier --check "projekt/Assets"
