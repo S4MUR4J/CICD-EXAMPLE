@@ -33,9 +33,9 @@ jobs:
         uses: game-ci/unity-test-runner@v4
         id: tests
         env:
-          UNITY_LICENSE: ${{ inputs.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ inputs.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ inputs.UNITY_PASSWORD }}
+          UNITY_LICENSE: ${{ inputs.license }}
+          UNITY_EMAIL: ${{ inputs.email }}
+          UNITY_PASSWORD: ${{ inputs.password }}
         with:
           projectPath: projekt
           testMode: editmode
