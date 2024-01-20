@@ -24,7 +24,7 @@ jobs:
       - name: Restoring dependencies...
         run: dotnet tool restore
       - name: Running format...
-        run: dotnet csharpier --check ./Assets/
+        run: dotnet csharpier --check
   tests:
     name: Test runner 🧪
     runs-on: ubuntu-latest
