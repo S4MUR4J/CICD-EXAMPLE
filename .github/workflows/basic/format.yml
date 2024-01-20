@@ -1,15 +1,11 @@
-name: format
+name: Code Format - CHECK
 
 on:
   workflow_call:
 
 jobs:
   format:
-    name: Format check 🗒️
     runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: "projekt/Assets"
     steps:
       - uses: actions/checkout@v3
       - name: Installing .NET...
@@ -17,7 +13,7 @@ jobs:
         with:
           dotnet-version: 8.0.x
       - name: Installing dependencies...
-        run: dotnet tool install -g csharpier
+        run: dotnet tool install -g csharpier projekt/Assets
       - name: Restoring dependencies...
         run: dotnet tool restore
       - name: Running format...
