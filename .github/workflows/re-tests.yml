@@ -39,9 +39,3 @@ jobs:
         with:
           name: Test results - artifacts
           path: ${{ steps.tests.outputs.artifactsPath }}
-      - uses: actions/upload-artifact@v3
-        name: Uploading coverage...
-        if: always()
-        with:
-          name: Coverage results - coverage
-          path: ${{ steps.tests.outputs.coveragePath }}
