@@ -23,7 +23,6 @@ jobs:
           with:
             fetch-depth: 0
             lfs: true
-  
         - uses: actions/cache@v3
           with:
             path: ${{ matrix.projectPath }}/Library
@@ -34,7 +33,6 @@ jobs:
               Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-
               Library-${{ matrix.projectPath }}-
               Library-
-  
         - uses: game-ci/unity-builder@v4
           env:
             UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -45,8 +43,9 @@ jobs:
             unityVersion: ${{ matrix.unityVersion }}
             targetPlatform: ${{ matrix.targetPlatform }}
             customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
-  
+        - name: Get version tag
+          run: echo "LAST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
         - uses: actions/upload-artifact@v3
           with:
-            name: Build
-            path: build
+            name: SCADA_${{ $LAST_TAG }}
+            path: scada
