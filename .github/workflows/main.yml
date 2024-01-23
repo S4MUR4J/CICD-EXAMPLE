@@ -36,9 +36,18 @@ jobs:
     name: Test runner 🧪
     uses: ./.github/workflows/re-tests.yml
     secrets: inherit
-  # call-build:
-  #   needs: call-tags
-  #   name: Build project 🏗️
-  #   uses: ./.github/workflows/re-build.yml
-  #   secrets: inherit
+  call-build:
+    needs: call-tags
+    name: Build project 🏗️
+    uses: ./.github/workflows/re-build.yml
+    secrets: inherit
+  release:
+    needs: call-build
+    runs-on: ubuntu-latest
+    name: Release project 📨
+    steps:
+      - name: Releasing...
+        uses: konfer-be/action-create-release-from-tag@v1.0.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       
