@@ -5,43 +5,6 @@ on:
     branches: [ "main" ]
     
 jobs:
-  # auto-tag:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-
-  #     - name: Set up Git
-  #       run: |
-  #         git config --global user.name 'github-actions'
-  #         git config --global user.email 'github-actions@github.com'
-
-  #     - name: Fetch Tags
-  #       run: git fetch --tags
-
-  #     - name: Calculate new tag
-  #       id: new_tag
-  #       run: |
-  #         # Pobierz tagi i posortuj je wersyjnie
-  #         TAG=$(git tag --sort=-v:refname | head -n 1)
-          
-  #         # Ustal nowy numer wersji
-  #         if [ -z "$TAG" ]; then
-  #           NEW_TAG="0.0"
-  #         else
-  #           NEW_TAG=$(echo $TAG | awk -F. '{$NF = $NF + 1; OFS="."; print $0}')
-  #         fi
-          
-  #         # Ustaw zmienną wyjściową dla kolejnych kroków
-  #         echo "::set-output name=tag::$NEW_TAG"
-
-  #     - name: Create and Push Tag
-  #       if: steps.new_tag.outputs.tag
-  #       run: |
-  #         NEW_TAG=${{ steps.new_tag.outputs.tag }}
-  #         git tag $NEW_TAG
-  #         git push origin $NEW_TAG
   # release:
   #   needs: auto-tag
   #   runs-on: ubuntu-latest
@@ -69,7 +32,7 @@ jobs:
     name: Version tag 🏷️
     uses: ./.github/workflows/re-tag.yml
   call-tests:
-    needs: call-format
+    needs: call-tags
     name: Test runner 🧪
     uses: ./.github/workflows/re-tests.yml
     secrets: inherit
