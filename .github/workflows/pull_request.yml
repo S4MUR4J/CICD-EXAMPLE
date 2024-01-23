@@ -8,7 +8,11 @@ jobs:
   Unity_CICD_PR:
     runs-on: ubuntu-latest
     steps:
-      - name: "Calling format check..."
-        uses: ./.github/workflows/format.yaml
-      - name: "Calling test runner..."
-        uses: ./.github/workflows/test.yaml
+      call-format:
+        name: Format check 🗒️
+        uses: ./.github/workflows/re-format.yml
+      call-tests:
+        needs: call-format
+        name: Test runner 🧪
+        uses: ./.github/workflows/re-tests.yml
+        secrets: inherit
