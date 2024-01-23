@@ -29,8 +29,6 @@ jobs:
           
           NEW_TAG="${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.${VERSION_PATCH}"
 
-          NEW_TAG="$MAIN.$(($SUB + 1))"
-
           echo "$NEW_TAG" >> $GITHUB_OUTPUT
           echo "This version tag - $NEW_TAG"
       - name: Creating tag...
