@@ -37,7 +37,7 @@ jobs:
     uses: ./.github/workflows/re-tests.yml
     secrets: inherit
   call-build:
-    needs: call-tags
+    needs: call-tests
     name: Build project 🏗️
     uses: ./.github/workflows/re-build.yml
     secrets: inherit
