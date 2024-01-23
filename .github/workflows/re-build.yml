@@ -49,3 +49,22 @@ jobs:
           with:
             name: Build
             path: build
+        - name: Downloading build artifacts...
+          uses: actions/download-artifact@v3
+          with:
+            name: Build
+        - name: Create tag artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: ${{github.ref_name}}
+            path: Release
+        - name: Creating Release...
+          id: create_release
+          uses: actions/create-release@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            tag_name: ${{ github.ref_name }}
+            release_name: SCADA_v${{ github.ref_name }}
+            draft: false
+            prerelease: false
