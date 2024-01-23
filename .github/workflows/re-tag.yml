@@ -14,23 +14,24 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-      - name: Fetching tags...
-        run: git fetch --tags
       - name: Calculating new tag...
         id: new_tag
         run: |
-          TAG=$(git tag -l "v*" | sort -V | tail -n1)
-          if [[ $TAG == "" ]]; then
-            TAG="v0.0"
+          VERSION_PREFIX="v"
+          VERSION_MAJOR_MINOR="1.0"
+          VERSION_PATCH=$(git tag --list "${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.*" --sort=-version:refname | head -n 1 | grep -oE '[0-9]+$')
+          
+          if [ -z "$VERSION_PATCH" ]; then
+          VERSION_PATCH=0
+          else
+            VERSION_PATCH=$((VERSION_PATCH + 1))
           fi
           
-          MAIN=$(echo $TAG | cut -d. -f1)
-          SUB=$(echo $TAG | cut -d. -f2)
+          NEW_TAG="${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.${VERSION_PATCH}"
 
           NEW_TAG="$MAIN.$(($SUB + 1))"
 
-          # Set the new tag as output
-          echo echo "$NEW_TAG" >> $GITHUB_OUTPUT
+          echo "$NEW_TAG" >> $GITHUB_OUTPUT
           echo "This version tag - $NEW_TAG"
       - name: Creating tag...
         if: steps.new_tag.outputs.tag
