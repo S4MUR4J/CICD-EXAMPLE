@@ -59,7 +59,7 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            tag_name: "$LAST_TAG"
-            release_name: SCADA_v"$LAST_TAG"
+            tag_name: ${{ env.LAST_TAG }}
+            release_name: SCADA_v${{ env.LAST_TAG }}
             draft: false
             prerelease: false
