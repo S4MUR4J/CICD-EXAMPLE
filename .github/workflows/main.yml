@@ -69,8 +69,12 @@ jobs:
     name: Test runner 🧪
     uses: ./.github/workflows/re-tests.yml
     secrets: inherit
-  call-build:
+  call-tags:
     needs: call-tests
+    name: Version tag 🏷️
+    uses: ./.github/workflows/re-tag.yml
+  call-build:
+    needs: call-tags
     name: Build project 🏗️
     uses: ./.github/workflows/re-build.yml
     secrets: inherit
