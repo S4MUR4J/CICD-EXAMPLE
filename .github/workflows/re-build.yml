@@ -47,5 +47,5 @@ jobs:
           run: echo "LAST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
         - uses: actions/upload-artifact@v3
           with:
-            name: SCADA_${{ LAST_TAG }}
+            name: SCADA_"$LAST_TAG"
             path: scada
