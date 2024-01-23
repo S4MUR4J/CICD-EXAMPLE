@@ -48,4 +48,4 @@ jobs:
         - uses: actions/upload-artifact@v3
           with:
             name: SCADA_"$LAST_TAG"
-            path: scada
+            path: build
