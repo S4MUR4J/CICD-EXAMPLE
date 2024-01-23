@@ -30,8 +30,8 @@ jobs:
           NEW_TAG="$MAIN.$(($SUB + 1))"
 
           # Set the new tag as output
-          echo "::set-output name=new_tag::$NEW_TAG"
-          echo "This versio tag - $NEW_TAG"
+          echo echo "$NEW_TAG" >> $GITHUB_OUTPUT
+          echo "This version tag - $NEW_TAG"
       - name: Creating tag...
         if: steps.new_tag.outputs.tag
         run: |
