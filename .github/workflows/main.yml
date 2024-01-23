@@ -158,15 +158,15 @@ jobs:
   #         prerelease: false
   call-format:
     name: Format check 🗒️
-    uses: ./.github/workflows/format.yml
+    uses: ./.github/workflows/re-format.yml
   call-tests:
     needs: call-format
     name: Test runner 🧪
-    uses: ./.github/workflows/test.yml
+    uses: ./.github/workflows/re-tests.yml
     secrets: inherit
   call-build:
     needs: call-tests
     name: Build project 🏗️
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/re-build.yml
     secrets: inherit
       
