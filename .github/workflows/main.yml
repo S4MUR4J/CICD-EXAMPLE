@@ -19,6 +19,6 @@ jobs:
     secrets: inherit
   call-build:
     needs: call-tests
-    name: Build project 🏗️
+    name: Build and release 🏗️
     uses: ./.github/workflows/re-build.yml
     secrets: inherit
