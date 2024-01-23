@@ -64,15 +64,15 @@ jobs:
   call-format:
     name: Format check 🗒️
     uses: ./.github/workflows/re-format.yml
-  # call-tests:
-  #   needs: call-format
-  #   name: Test runner 🧪
-  #   uses: ./.github/workflows/re-tests.yml
-  #   secrets: inherit
   call-tags:
     needs: call-format
     name: Version tag 🏷️
     uses: ./.github/workflows/re-tag.yml
+  call-tests:
+    needs: call-format
+    name: Test runner 🧪
+    uses: ./.github/workflows/re-tests.yml
+    secrets: inherit
   # call-build:
   #   needs: call-tags
   #   name: Build project 🏗️
