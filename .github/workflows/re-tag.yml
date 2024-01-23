@@ -8,36 +8,35 @@ jobs:
       name: call
       runs-on: ubuntu-latest
       steps:
-      - name: Checkout
+      - name: Checking out...
         uses: actions/checkout@v2
-
-      - name: Set up Git
+      - name: Setting git up...
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-
-      - name: Fetch Tags
+      - name: Fetching tags...
         run: git fetch --tags
-
-      - name: Calculate new tag
+      - name: Calculating new tag...
         id: new_tag
         run: |
-          # Pobierz tagi i posortuj je wersyjnie
-          TAG=$(git tag --sort=-v:refname | head -n 1)
-          
-          # Ustal nowy numer wersji
-          if [ -z "$TAG" ]; then
-            NEW_TAG="0.0"
-          else
-            NEW_TAG=$(echo $TAG | awk -F. '{$NF = $NF + 1; OFS="."; print $0}')
+          TAG=$(git tag -l "v*" | sort -V | tail -n1)
+          if [[ $TAG == "" ]]; then
+            TAG="v0.0"
           fi
           
-          # Ustaw zmienną wyjściową dla kolejnych kroków
-          echo "::set-output name=tag::$NEW_TAG"
+          MAIN=$(echo $TAG | cut -d. -f1)
+          SUB=$(echo $TAG | cut -d. -f2)
 
-      - name: Create and Push Tag
+          NEW_TAG="$MAIN.$(($SUB + 1))"
+
+          # Set the new tag as output
+          echo "::set-output name=new_tag::$NEW_TAG"
+          echo "This versio tag - $NEW_TAG"
+      - name: Creating tag...
         if: steps.new_tag.outputs.tag
         run: |
           NEW_TAG=${{ steps.new_tag.outputs.tag }}
           git tag $NEW_TAG
+      - name: Pushing tag...
+        run: |
           git push origin $NEW_TAG
