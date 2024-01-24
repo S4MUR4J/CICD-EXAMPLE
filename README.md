@@ -1,3 +1,7 @@
-# GIT-TEST
+# UNITY-CICD
 
-TEST force
+## Prerequesits
+
+- Install git LFS
+- Add .gitignore Unity snippet
+- Add .gitattributes Unity snippet to project
