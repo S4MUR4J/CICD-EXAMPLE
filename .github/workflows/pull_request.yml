@@ -2,7 +2,7 @@ name: Unity CI/CD - Main/Release PR (Format check, Test Runner)
 
 on:
   pull_request:
-    branches: [ "main", "release" ]
+    branches: [ "test", "release" ]
     
 jobs:
   call-format:
