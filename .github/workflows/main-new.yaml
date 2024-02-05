@@ -19,7 +19,7 @@ jobs:
       - name: Restoring dependencies...
         run: dotnet tool restore
       - name: Running format...
-        run: dotnet csharpier --check "projekt/Assets"
+        run: dotnet csharpier --check "src/Assets"
   tags:
     needs: format
     name: Version tag 🏷️
@@ -44,8 +44,8 @@ jobs:
       - name: Caching Library...
         uses: actions/cache@v3
         with:
-          path: projekt/Library
-          key: Library-projekt
+          path: src/Library
+          key: Library-src
           restore-keys: |
             Library-
       - name: Running tests... 
@@ -56,7 +56,7 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          projectPath: projekt
+          projectPath: src
           testMode: editmode
           artifactsPath: editmode-artifacts
           githubToken: ${{ secrets.GITHUB_TOKEN }}
@@ -76,7 +76,7 @@ jobs:
       fail-fast: false
       matrix:
         projectPath:
-          - projekt
+          - src
         unityVersion:
           - 2022.3.11f1
         targetPlatform:
